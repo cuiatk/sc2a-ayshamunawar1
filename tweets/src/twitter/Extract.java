@@ -90,7 +90,7 @@ public class Extract {
     public static Set<String> getMentionedUsers(List<Tweet> tweets) {
         //throw new RuntimeException("not implemented");
         Pattern pattern = Pattern.compile("@(\\w+|\\W+)");
-        Set<String> MentionedUsers = new HashSet<String>();
+        Set<String> mentionedusers = new HashSet<String>();
         for (Tweet tweet : tweets) {
             String substring = tweet.getText();
             Matcher matcher = pattern.matcher(substring.toLowerCase());
@@ -99,9 +99,9 @@ public class Extract {
                 System.out.println(matcher.group(1));
                 mentionedusersLowerCase.add(matcher.group(1)); 
                 }
-            MentionedUsers.addAll(mentionedusersLowerCase);
+            mentionedusers.addAll(mentionedusersLowerCase);
             }
-        return MentionedUsers;
+        return mentionedusers;
         
                 
     }
