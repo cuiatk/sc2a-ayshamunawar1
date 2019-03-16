@@ -6,6 +6,7 @@ package twitter;
 import static org.junit.Assert.*;
 
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Set;
 
@@ -21,21 +22,42 @@ public class ExtractTest {
     
     private static final Instant d1 = Instant.parse("2016-02-17T10:00:00Z");
     private static final Instant d2 = Instant.parse("2016-02-17T11:00:00Z");
+ 
     
     private static final Tweet tweet1 = new Tweet(1, "alyssa", "is it reasonable to talk about rivest so much?", d1);
     private static final Tweet tweet2 = new Tweet(2, "bbitdiddle", "rivest talk in 30 minutes #hype", d2);
-    
+   
     @Test(expected=AssertionError.class)
     public void testAssertionsEnabled() {
         assert false; // make sure assertions are enabled with VM argument: -ea
     }
-    
     @Test
-    public void testGetTimespanTwoTweets() {
+    public void testGetTimespanThreeTweets1() {
         Timespan timespan = Extract.getTimespan(Arrays.asList(tweet1, tweet2));
         
-        assertEquals("expected start", d1, timespan.getStart());
-        assertEquals("expected end", d2, timespan.getEnd());
+        assertEquals(d1, timespan.getStart());
+        assertEquals(d2, timespan.getEnd());
+    }
+    
+    @Test
+    public void testGetTimespanTwoTweets1() {
+        Timespan timespan = Extract.getTimespan(Arrays.asList(tweet1, tweet2));
+        
+        assertEquals(d1, timespan.getStart());
+        assertEquals(d2, timespan.getEnd());
+    }
+    //This test should give the same start and end for the single tweet
+    @Test
+    public void testGetTimespanOneTweet() {
+        Timespan timespan = Extract.getTimespan(Arrays.asList(tweet1));
+        assertEquals(d1, timespan.getStart());
+        assertEquals(d1, timespan.getEnd());        
+    }
+    
+    @Test
+    public void testGetTimespanEmptyTweet() {
+        Timespan timespan = Extract.getTimespan(new ArrayList<Tweet>());
+        assertEquals(timespan.getEnd(), timespan.getStart());         
     }
     
     @Test
@@ -43,6 +65,9 @@ public class ExtractTest {
         Set<String> mentionedUsers = Extract.getMentionedUsers(Arrays.asList(tweet1));
         
         assertTrue("expected empty set", mentionedUsers.isEmpty());
+    }
+    
+  
     }
 
     /*
@@ -59,4 +84,4 @@ public class ExtractTest {
      * keep them in this test class.
      */
 
-}
+
