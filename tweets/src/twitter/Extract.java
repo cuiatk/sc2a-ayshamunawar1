@@ -23,6 +23,8 @@ public class Extract {
      * @return a minimum-length time interval that contains the timestamp of
      *         every tweet in the list.
      */
+	//check git
+	// comments
     public static Timespan getTimespan(List<Tweet> tweets) {
         throw new RuntimeException("not implemented");
     }
